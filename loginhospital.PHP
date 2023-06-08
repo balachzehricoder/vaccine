@@ -1,7 +1,83 @@
 <?php
+session_start();
 
+include 'config.php';
 
+if (isset($_SESSION["HOSPITALID"])) {
+  header("Location: index.php");
+  exit();
+}
+
+if (isset($_POST["signup"])) {
+  $HOSPITAL_NAME = mysqli_real_escape_string($conn, $_POST["HOSPITAL_NAME"]);
+  $HOSPITAL_ADDRESS = mysqli_real_escape_string($conn, $_POST["HOSPITAL_ADDRESS"]);
+  $HOSPITAL_CONTACTNUMBER = mysqli_real_escape_string($conn, $_POST["HOSPITAL_CONTACTNUMBER"]);
+  $HOSPITAL_EMAIL = mysqli_real_escape_string($conn, $_POST["HOSPITAL_EMAIL"]);
+  $HOSPITAL_PASSWORD = mysqli_real_escape_string($conn, $_POST["HOSPITAL_PASSWORD"]);
+  $CPASSWORD = mysqli_real_escape_string($conn, $_POST["CPASSWORD"]);
+
+  // Check if passwords match
+  if ($HOSPITAL_PASSWORD !== $CPASSWORD) {
+    echo "<script>alert('Passwords do not match');</script>";
+  } else {
+    // Check if email already exists
+    $check_email = mysqli_query($conn, "SELECT HOSPITAL_EMAIL FROM hospital WHERE HOSPITAL_EMAIL = '$HOSPITAL_EMAIL'");
+    if (mysqli_num_rows($check_email) > 0) {
+      echo "<script>alert('Email already exists');</script>";
+    } else {
+      // Insert new user into the database
+      $hashed_password = password_hash($HOSPITAL_PASSWORD, PASSWORD_DEFAULT); // Use password_hash() for secure password hashing
+      $sql = "INSERT INTO hospital (HOSPITAL_NAME, HOSPITAL_ADDRESS, HOSPITAL_CONTACTNUMBER, HOSPITAL_EMAIL, HOSPITAL_PASSWORD) VALUES ('$HOSPITAL_NAME', '$HOSPITAL_ADDRESS', '$HOSPITAL_CONTACTNUMBER', '$HOSPITAL_EMAIL' , '$hashed_password')";
+      $result = mysqli_query($conn, $sql);
+      if ($result) {
+        $_POST["HOSPITAL_NAME"] = "";
+        $_POST["HOSPITAL_ADDRESS"] = "";
+        $_POST["HOSPITAL_CONTACTNUMBER"] = "";
+        $_POST["HOSPITAL_EMAIL"] = "";
+        $_POST["HOSPITAL_PASSWORD"] = "";
+        $_POST["CPASSWORD"] = "";
+        echo "<script>alert('User registration successful');</script>";
+      } else {
+        echo "<script>alert('User registration failed');</script>";
+      }
+    }
+  }
+}
+
+if (isset($_POST["signin"])) {
+  $HOSPITAL_EMAIL = mysqli_real_escape_string($conn, $_POST["HOSPITAL_EMAIL"]);
+  $HOSPITAL_PASSWORD = mysqli_real_escape_string($conn, $_POST["HOSPITAL_PASSWORD"]);
+
+  $check_email = mysqli_query($conn, "SELECT HOSPITALID, HOSPITAL_PASSWORD, HOSPITAL_NAME FROM hospital WHERE HOSPITAL_EMAIL = '$HOSPITAL_EMAIL'");
+  if (mysqli_num_rows($check_email) > 0) {
+    $row = mysqli_fetch_assoc($check_email);
+    $stored_password = $row['HOSPITAL_PASSWORD'];
+    if (password_verify($HOSPITAL_PASSWORD, $stored_password)) {
+        $_SESSION["HOSPITALID"] = $row['HOSPITALID'];
+        $_SESSION["HOSPITAL_NAME"] = $row['HOSPITAL_NAME'];
+        header("Location: index.php");
+        exit();
+    } else {
+      echo "<script>alert('Login details are incorrect. Please try again.');</script>";
+    }
+  } else {
+    echo "<script>alert('Login details are incorrect. Please try again.');</script>";
+  }
+}
 ?>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -437,20 +513,20 @@
     <!-- Forms Area -->
     <div class="forms__area">
       <!-- Login Form -->
-      <form class="login__form" id="loginForm">
+      <form class="login__form" action="" method="post" id="loginForm">
         <!-- Form Title -->
         <h1 class="form__title">Sign In!</h1>
         <!-- inputs Groups -->
         <div class="input__group">
           <label class="field">
-            <input type="text" name="username" placeholder="Username" id="loginUsername">
+            <input type="text" name="HOSPITAL_EMAIL" placeholder="Username" id="loginUsername">
           </label>
           <span class="input__icon"><i class="bx bx-user"></i></span>
           <small class="input__error_message"></small>
         </div>
         <div class="input__group">
           <label class="field">
-            <input type="password" name="password" placeholder="Password" id="loginPassword">
+            <input type="password" name="HOSPITAL_PASSOWRD" placeholder="Password" id="loginPassword">
           </label>
           <span class="input__icon"><i class="bx bx-lock"></i></span>
           <span class="showHide__Icon"><i class="bx bx-hide"></i></span>
@@ -465,7 +541,7 @@
           <div class="forgot_password">Forgot Password?</div>
         </div>
         <!-- Login Button -->
-        <button type="submit" class="submit-button" id="loginSubmitBtn">Sign in</button>
+        <button type="submit" name="signin" class="submit-button" id="loginSubmitBtn">Sign in</button>
         <!-- Alternate Login -->
         <div class="alternate-login">
           <div class="link">
@@ -480,27 +556,44 @@
       </form> <!-- End Login Form -->
   
       <!-- Sign Up Form -->
-      <form class="sign-up__form" id="signUpForm">
+      <form class="sign-up__form" action="" method="post" id="signUpForm">
         <!-- Form Title -->
         <h1 class="form__title">Sign Up!</h1>
         <!-- inputs Groups -->
         <div class="input__group">
           <label class="field">
-            <input type="text" name="username" placeholder="Username123..." id="signUpUsername">
+            <input type="text" name="HOSPITAL_NAME" placeholder="Username123" id="signUpUsername">
           </label>
           <span class="input__icon"><i class="bx bx-user"></i></span>
           <small class="input__error_message"></small>
         </div>
+
         <div class="input__group">
           <label class="field">
-            <input type="text" name="email" placeholder="Email@example.com" id="signUpEmail">
+            <input type="text" name="HOSPITAL_ADDRESS" placeholder="ADDRESS" id="signUpUsername">
+          </label>
+          <span class="input__icon"><i class="bx bx-user"></i></span>
+          <small class="input__error_message"></small>
+        </div>
+
+        <div class="input__group">
+          <label class="field">
+            <input type="number" name="HOSPITAL_CONTACTNUMBER" placeholder="PHONE NUMBER" id="signUpUsername">
+          </label>
+          <span class="input__icon"><i class="bx bx-user"></i></span>
+          <small class="input__error_message"></small>
+        </div>
+
+        <div class="input__group">
+          <label class="field">
+            <input type="text" name="HOSPITAL_EMAIL" placeholder="Email@example.com" id="signUpEmail">
           </label>
           <span class="input__icon"><i class="bx bx-at"></i></span>
           <small class="input__error_message"></small>
         </div>
         <div class="input__group">
           <label class="field">
-            <input type="password" name="password" placeholder="Password123$#%&..." id="signUpPassword">
+            <input type="password" name="HOSPITAL_PASSOWRD" placeholder="Password123$#%&..." id="signUpPassword">
           </label>
           <span class="input__icon"><i class="bx bx-lock"></i></span>
           <span class="showHide__Icon"><i class="bx bx-hide"></i></span>
@@ -508,14 +601,14 @@
         </div>
         <div class="input__group confirm__group">
           <label class="field">
-            <input type="password" name="confirm_password" placeholder="Confirm Password" id="signUpConfirmPassword">
+            <input type="password" name="CPASSWORD" placeholder="Confirm Password" id="signUpConfirmPassword">
           </label>
           <span class="input__icon"><i class="bx bx-lock"></i></span>
           <span class="showHide__Icon"><i class="bx bx-hide"></i></span>
           <small class="input__error_message"></small>
         </div>
         <!-- Sign Up Button -->
-        <button type="submit" class="submit-button" id="signUpSubmitBtn">Sign Up</button>
+<button type="submit" name="signup" class="submit-button" id="signupSubmitBtn">Sign Up</button>
         <!-- Alternate Login -->
         <div class="alternate-login">
           <div class="link">

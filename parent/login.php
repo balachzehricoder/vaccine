@@ -331,11 +331,11 @@ if (isset($_POST["signin"])) {
 				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
 			<span>or use your email for registration</span>
-			<input type="text" placeholder="Name" name="PARENT_NAME" />
-            <input type="number" placeholder="CNIC" name="PARENT_CNIC" />
-			<input type="email" placeholder="Email" name="PARENT_EMAIL" />
-			<input type="password" placeholder="Password" name="PARENT_PASSWORD" />
-            <input type="password" placeholder="Password" name="signup_cpassword" />
+			<input type="text" placeholder="Name" id="username" name="PARENT_NAME" />
+            <input type="number" placeholder="CNIC" id="Cnic" name="PARENT_CNIC" />
+			<input type="email" placeholder="Email" id="email" name="PARENT_EMAIL" />
+			<input type="password" placeholder="Password" id="password" name="PARENT_PASSWORD" />
+            <input type="password" placeholder="Password" id="password2" name="signup_cpassword" />
 
             
 			<button name="signup" type="submit">Sign Up</button>
@@ -390,4 +390,72 @@ if (isset($_POST["signin"])) {
     
     signInButton.addEventListener('click', () => {
         container.classList.remove("right-panel-active");
-    });</script>
+  
+    });
+    
+    
+    // validation
+
+
+    // php file ma connect kardo mena function bana dia ha mujha class and id nahi mil rahi
+
+const PARENT_NAME = document.getElementById('username');
+const PARENT_CNIC = document.getElementById('Cnic');
+const PARENT_PASSWORD = document.getElementById('password');
+const signup_cpassword = document.getElementById('password2');
+const PARENT_EMAIL = document.getElementById('email');
+
+// Validation for password 
+function validatePassword() {
+  const password = PARENT_PASSWORD.value;
+  const confirmPassword = signup_cpassword.value;
+
+  if (password.length < 8) {
+    alert('Password should have a minimum of 8 characters.');
+    return false;
+  }
+
+  if (password !== confirmPassword) {
+    alert('Passwords do not match.');
+    return false;
+  }
+
+  return true;
+}
+
+// Validation for CNIC 
+function validateCnic() {
+  const cnic = PARENT_CNIC.value;
+
+  if (cnic.length !== 13) {
+    alert('CNIC should have exactly 13 digits.');
+    return false;
+  }
+
+  return true;
+}
+
+// Validation for email
+function validateEmail() {
+  const email = PARENT_EMAIL.value;
+  const allowedDomains = ['gmail.com', 'hotmail.com', 'yahoo.com',  'outlook.com'];
+  const domain = email.split('@')[1];
+
+  if (!allowedDomains.includes(domain)) {
+    alert('Invalid email domain. Only gmail.com, hotmail.com, and yahoo.com are allowed.');
+    return false;
+  }
+
+  return true;
+}
+
+// Trigger for validation
+PARENT_PASSWORD.addEventListener('blur', validatePassword);
+signup_cpassword.addEventListener('blur', validatePassword);
+PARENT_CNIC.addEventListener('blur', validateCnic);
+PARENT_EMAIL.addEventListener('blur', validateEmail);
+
+    
+    
+    
+    </script>
