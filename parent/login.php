@@ -442,7 +442,7 @@ function validateEmail() {
   const domain = email.split('@')[1];
 
   if (!allowedDomains.includes(domain)) {
-    alert('Invalid email domain. Only gmail.com, hotmail.com, and yahoo.com are allowed.');
+    alert('Invalid email domainuuuu');
     return false;
   }
 
