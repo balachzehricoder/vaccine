@@ -15,7 +15,7 @@
 
 <br><br><br>
         <h2>List of Clients</h2>
-        <a class="btn btn-primary" href="create.php" role="button">NEW PARENT</a>
+        <a class="btn btn-primary" href="create.php" role="button">REGISTER YOUR CHILDREN</a>
         <br>
         <table class="table">
             <thead>
@@ -24,6 +24,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
+                    <th>Created</th>
                     <th>Action</th>
                 </tr>
             <tbody>
@@ -39,22 +40,21 @@
                 // }
                 include 'config.php';
                 // read all row from database table
-                $sql = "SELECT * FROM parent";
+                $sql = "SELECT * FROM CHILDREN";
                 $result = $conn->query($sql);
                 if (!$result) {
                     die("invalid query:" . $conn->error);
                 }
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>
+    <td>$row[CHILDRENID]</td>
+    <td>$row[CHILDREN_NAME]</td>
+    <td>$row[CHILDREN_DATEOFBIRTH]</td>
     <td>$row[PARENTID]</td>
-    <td>$row[PARENT_NAME]</td>
-    <td>$row[PARENT_EMAIL]</td>
-    <td>$row[PARENT_CNIC]</td>
-   
    
     <td>
-    <a class='btn btn-primary btn-sm' href='edit.php?id=$row[PARENTID]'>Edit</a>
-    <a class='btn btn-danger btn-sm' href='delete.php?id=$row[PARENTID]'>Delete</a>
+        <a class='btn btn-primary btn-sm' href='edit.php?id=$row[CHILDRENID]'>Edit</a>
+        <a class='btn btn-danger btn-sm' href='delete.php?id=$row[CHILDRENID]'>Delete</a>
     </td>
 </tr>";
                 }
