@@ -1,32 +1,32 @@
 <?php
-
+// error_reporting(0);
 $servername = "localhost";
 $username = "root";
 $password = "";
 $database = " db_vaccinecompany";
 //Create Connection
-$conn = new mysqli($servername, $username, $password, $database);
+$con = new mysqli($servername, $username, $password, $database);
 
 
-$PARENTID = "";
-$PARENT_NAME = "";
-$PARENT_CNIC = "";
-$PARENT_EMAIL = "";
-$PARENT_PASSWORD = "";
+$id = "";
+$name = "";
+$email = "";
+$CNIC = "";
 
 $erroMessage = "";
 $succesMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+
+    
     //show the method of the employee
-    if (!isset($_GET["PARENTID"])) {
+    if (!isset($_GET["id"])) {
         header("location: index.php");
         exit;
     }
-    $PARENTID = $_GET["id"];
-
-    $sql = "SELECT * FROM parent WHERE id = $PARENTID";
-    $result = $conn->query($sql);
+    $id = $_GET["id"];
+    $sql = "SELECT * FROM parent WHERE PARENTID = $id";
+    $result = $con->query($sql);
     $row = $result->fetch_assoc();
 
     if (!$row) {
@@ -34,41 +34,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         exit;
     }
 
-    $PARENT_NAME = $row["PARENT_NAME"];
-    $PARENT_CNIC = $row["PARENT_CNIC"];
-    $PARENT_EMAIL = $row["PARENT_EMAIL"];
-    $PARENT_PASSWORD = $row["PARENT_PASSWORD"];
-
+    $name = $row["PARENT_NAME"];
+    $email = $row["PARENT_EMAIL"];
+    $CNIC = $row["PARENT_CNIC"];
 
 
 } else {
-    $PARENTID = $_POST["PARENTID"];
-    $PARENT_NAME = $_POST["PARENT_NAME"];
-    $PARENT_CNIC = $_POST["PARENT_CNIC"];
-    $PARENT_EMAIL = $_POST["PARENT_EMAIL"];
-    $PARENT_PASSWORD = $_POST["PARENT_PASSWORD"];
+   
+    $id = $_POST["id"];
+    $name = $_POST["name"];
+    $CNIC = $_POST["CNIC"];
+    $email = $_POST["email"];
+    
 
 
-    do {
-        if (empty($PARENTID) || empty($PARENT_NAME) || empty($PARENT_CNIC) || empty($PARENT_EMAIL) || empty($PARENT_PASSWORD)) {
-            $erroMessage = "ALL the fields are required";
-            break;
-      }
-      $sql = "UPDATE parent " . // added space after "employee"
-      "SET PARENT_NAME = '$PARENT_NAME', PARENT_CNIC = '$PARENT_CNIC', PARENT_EMAIL = '$PARENT_EMAIL', PARENT_PASSWORD = '$PARENT_PASSWORD' " . // added spaces after each comma
-      "WHERE CHILDRENID = $PARENTID";
+    if (empty($name) || empty($email) || empty($CNIC)) {
+        $errorMessage = "ALL the fields are required";
+    } else {
+        $sql = "UPDATE parent SET PARENT_NAME = '$name', PARENT_EMAIL = '$email', PARENT_CNIC = '$CNIC' WHERE PARENTID = $id";
+    
+        $result = $con->query($sql);
 
-          $result = $con->query($sql);
+        
         if (!$result) {
-            $erroMessage = "invalid query:" . $conn->error;
-            break;
+            $errorMessage = "Invalid query: " . $con->error;
+        } else {
+            
+            $successMessage = "Hospital updated correctly";
+            header("Location: index.php");
+            exit;
         }
-        $succesMessage = "employ updated correctly";
-
-        header("location: index.php");
-        exit;
-
-    } while (true);
+    }
+    
 
 }
 
@@ -109,26 +106,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             <div class="row md-3">
                 <label class="col-sm-3 col-form-label">Name</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="PARENT_NAME" value="<?php echo $PARENT_NAME; ?>">
+                    <input type="text" class="form-control" name="name" value="<?php echo $name; ?>">
                 </div>
             </div>
-
-            <div class="col-sm-6">
-                    <input type="number" class="form-control" name="PARENT_CNIC" value="<?php echo $PARENT_CNIC; ?>">
+            <div class="row md-3">
+                <label class="col-sm-3 col-form-label">CNIC</label>
+                <div class="col-sm-6">
+                    <input type="number" class="form-control" name="CNIC" value="<?php echo $CNIC; ?>">
                 </div>
             </div>
             <div class="row md-3">
                 <label class="col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="PARENT_EMAIL" value="<?php echo $PARENT_EMAIL; ?>">
+                    <input type="text" class="form-control" name="email" value="<?php echo $email; ?>">
                 </div>
             </div>
-            <div class="row md-3">
-                <label class="col-sm-3 col-form-label">phone</label>
-                <div class="col-sm-6">
-                    <input type="password" class="form-control" name="PARENT_PASSWORD" value="<?php echo $PARENT_PASSWORD; ?>">
-                </div>
-            </div>
+            
 
             <?php
             if (!empty($succesMessage)) {

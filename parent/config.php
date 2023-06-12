@@ -10,7 +10,7 @@
 
 
  if (!$conn) {
-     echo die("our website refused or undercanstraction" . mysqli_connect_errno());
+     echo die("con filed" . mysqli_connect_errno());
  } 
 
 
