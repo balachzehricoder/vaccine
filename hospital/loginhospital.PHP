@@ -3,10 +3,7 @@ session_start();
 
 include 'config.php';
 
-if (isset($_SESSION["HOSPITALID"])) {
-  header("Location: index.php");
-  exit();
-}
+
 
 if (isset($_POST["signup"])) {
 
