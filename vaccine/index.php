@@ -219,9 +219,7 @@
 	}	
 </style>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<script src="https://kit.fontawesome.com/20034a5f5a.js" crossorigin="anonymous"></script>
-	
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
@@ -233,7 +231,7 @@
           <h2>Manage <b>Employees</b></h2>
         </div>
         <div class="col-sm-6">
-          <a href="loginhospital.PHP" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
+          <a href="login-1.PHP" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
         </div>
       </div>
     </div>
@@ -249,9 +247,10 @@
           
           <th>id</th>
           <th>name</th>
-          <th>Address</th>
-          <th>Phone</th>
-          <th>email</th>
+          <th>issuedate</th>
+          <th>expiredate</th>
+          <th>status</th>
+          <th>des</th>
 
           <th>Actions</th>
         </tr>
@@ -261,32 +260,32 @@
         <?php
         include 'config.php';
                 // read all row from database table
-                $sql = "SELECT * FROM hospital";
+                $sql = "SELECT * FROM vaccine";
                 $result = $conn->query($sql);
                 if (!$result) {
                     die("invalid query:" . $conn->error);
                 }
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>
-    <td>$row[HOSPITALID]</td>
-    <td>$row[HOSPITAL_NAME]</td>
-    <td>$row[HOSPITAL_ADDRESS]</td>
-    <td>$row[HOSPITAL_EMAIL]</td>
-    <td>$row[HOSPITAL_CONTACTNUMBER]</td>
+    <td>$row[VACCINEID]</td>
+    <td>$row[VACCINE_NAME]</td>
+    <td>$row[VACCINE_ISSUEDATE]</td>
+    <td>$row[VACCINE_EXPIREDATE]</td>
+    <td>$row[VACCINE_STATUS]</td>
+    <td>$row[VACCINE_DESC]</td>
+ 
    
     <td>
-        <a class='btn btn-primary btn-sm' href='edit.php?id=$row[HOSPITALID]'>Edit</a>
-        <a class='btn btn-danger btn-sm' href='delete.php?id=$row[HOSPITALID]'>Delete</a>
-        <a  href='fullpage.php?id=$row[HOSPITALID]'><i class='fa-regular fa-eye' style='color: #108e5e;'></i></a>
-
-        
-
+        <a class='btn btn-primary btn-sm' href='edit.php?id=$row[VACCINEID]'>Edit</a>
+        <a class='btn btn-danger btn-sm' href='delete.php?id=$row[VACCINEID]'>Delete</a>
     </td>
 </tr>";
                 }
                 ?>
 
-           
+            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+          </td>
         </tr>
       </tbody>
     </table>

@@ -1,3 +1,24 @@
+<?php 
+include 'config.php';
+
+$id = $_GET['id'];
+
+
+$query = "SELECT * FROM hospital where id='$id' ";
+$result = $conn->query($query);
+if($result->num_rows > 0){
+    foreach($result as $row){
+        $p_name = $row['p_name'];
+        $p_price = $row['p_price'];
+        $p_tax = $row['p_tax'];
+        $p_qty = $row['p_qty'];
+        $img_upload = $row['img_upload'];
+?>
+
+
+
+
+
 <style>    body {
         color: #566787;
 		background: #f5f5f5;
@@ -258,34 +279,7 @@
       </thead>
       <tbody>
         <tr>
-        <?php
-        include 'config.php';
-                // read all row from database table
-                $sql = "SELECT * FROM hospital";
-                $result = $conn->query($sql);
-                if (!$result) {
-                    die("invalid query:" . $conn->error);
-                }
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>
-    <td>$row[HOSPITALID]</td>
-    <td>$row[HOSPITAL_NAME]</td>
-    <td>$row[HOSPITAL_ADDRESS]</td>
-    <td>$row[HOSPITAL_EMAIL]</td>
-    <td>$row[HOSPITAL_CONTACTNUMBER]</td>
-   
-    <td>
-        <a class='btn btn-primary btn-sm' href='edit.php?id=$row[HOSPITALID]'>Edit</a>
-        <a class='btn btn-danger btn-sm' href='delete.php?id=$row[HOSPITALID]'>Delete</a>
-        <a  href='fullpage.php?id=$row[HOSPITALID]'><i class='fa-regular fa-eye' style='color: #108e5e;'></i></a>
-
         
-
-    </td>
-</tr>";
-                }
-                ?>
-
            
         </tr>
       </tbody>
@@ -411,3 +405,8 @@
 });
 </script>
 </div>
+
+
+
+
+		<?php }}?>
