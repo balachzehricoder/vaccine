@@ -1,4 +1,6 @@
 <?php
+include 'nav.html';
+
 // error_reporting(0);
 $servername = "localhost";
 $username = "root";

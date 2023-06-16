@@ -1,4 +1,6 @@
 <?php
+include 'nav.html';
+
 session_start();
 
 include 'config.php';

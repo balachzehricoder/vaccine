@@ -1,5 +1,7 @@
 <?php 
 include 'config.php';
+include 'nav.html';
+
 
 $id = $_GET['id'];
 

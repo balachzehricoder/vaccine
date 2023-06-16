@@ -1,6 +1,6 @@
 <?php
 include "db_conn.php";
-
+include 'nav.html';
 if (isset($_POST["submit"])) {
    $name = $_POST['name'];
    $parent = $_POST['parent'];

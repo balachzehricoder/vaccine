@@ -1,5 +1,7 @@
 <?php
 include "db_conn.php";
+include 'nav.html';
+
 ?>
 
 <!DOCTYPE html>

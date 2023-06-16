@@ -1,3 +1,5 @@
+<?php include 'nav.html';
+ ?>
 <style>    body {
         color: #566787;
 		background: #f5f5f5;
