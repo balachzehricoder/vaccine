@@ -1,5 +1,5 @@
 <?php
-include 'nav.html';
+include '../shared/nav.php';
 
 ?>
 <style>    body {

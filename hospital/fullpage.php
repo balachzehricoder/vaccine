@@ -1,6 +1,6 @@
 <?php 
 include 'config.php';
-include 'nav.html';
+include '../shared/nav.php';
 
 
 $id = $_GET['id'];

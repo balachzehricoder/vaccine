@@ -1,5 +1,5 @@
 <?php
-include 'nav.html';
+include '../shared/nav.php';
 
 include "db_conn.php";
 $id = $_GET["id"];

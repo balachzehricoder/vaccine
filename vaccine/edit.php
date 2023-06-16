@@ -1,4 +1,7 @@
 <?php
+
+include '../shared/nav.php';
+
 // error_reporting(0);
 $servername = "localhost";
 $username = "root";

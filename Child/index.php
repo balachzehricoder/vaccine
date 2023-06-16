@@ -1,6 +1,6 @@
 <?php
-include "db_conn.php";
-include 'nav.html';
+include "config.php";
+include '../shared/nav.php';
 
 ?>
 

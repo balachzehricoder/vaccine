@@ -1,5 +1,5 @@
 <?php
-include 'nav.html';
+include '../shared/nav.php';
 
 session_start();
 

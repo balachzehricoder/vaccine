@@ -1,4 +1,5 @@
-<?php include 'nav.html';
+<?php 
+include '../shared/nav.php';
  ?>
 <style>    body {
         color: #566787;
