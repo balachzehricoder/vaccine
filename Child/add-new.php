@@ -1,9 +1,10 @@
 <?php
+
 include "config.php";
 include '../shared/nav.php';
 if (isset($_POST["submit"])) {
    $name = $_POST['name'];
-   $parent = $_POST['parent'];
+   $parent = $_SESSION["PARENTID"];
    $dob = $_POST['dob'];
    $gender = $_POST['gender'];
 
@@ -58,10 +59,6 @@ if (isset($_POST["submit"])) {
                   <input type="text" class="form-control" name="name" placeholder="Child name">
                </div>
 
-               <div class="col">
-                  <label class="form-label">Parent:</label>
-                  <input type="text" class="form-control" name="parent" placeholder="Parent name">
-               </div>
             </div>
 
             <div class="mb-3">
