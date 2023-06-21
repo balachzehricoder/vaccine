@@ -84,10 +84,7 @@
                 <a class="dropdown-item" href="../hospital/loginhospital.PHP"><Login/regiter>
                 <a class="dropdown-item" href="../Child/add-new.php"><Login/regiter>
                 <a class="dropdown-item" href="../vaccine/"><Login/regiter>
-                <a class="dropdown-item" href="/Child/logout.php">Logout</a>
-                <a class="dropdown-item" href="../parent/logout.php">Logout</a>
-                <a class="dropdown-item" href="../hospital/logout.php">Logout</a>
-                <a class="dropdown-item" href="../vaccine/logout.php">Logout</a>
+                
               </div>
             </li>
             
@@ -98,7 +95,7 @@
             </li>
           </ul>
           
-           <a href="delete.php"> <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">logout</button></a>
+           <a href="../shared/logout.php"> <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">logout</button></a>
           </form>
         </div>
       </nav>

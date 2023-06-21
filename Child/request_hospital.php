@@ -1,7 +1,25 @@
 <?php
+ session_start();
+
+if (!isset($_SESSION["PARENTID"])) {
+  header("Location: ../parent/login-1.php");
+  exit();
+}
 include '../shared/nav.php';
 
-?>
+
+$vacc_id =  $_GET["vacc_id"];
+$child_id = $_GET["child_id"];
+
+        ?>
+
+
+
+
+
+
+
+
 <style>    body {
         color: #566787;
 		background: #f5f5f5;
@@ -234,10 +252,10 @@ include '../shared/nav.php';
     <div class="table-title">
       <div class="row">
         <div class="col-sm-6">
-          <h2>Manage <b>Employees</b></h2>
+          <h2>Choose <b>Hospital</b></h2>
         </div>
         <div class="col-sm-6">
-          <a href="loginhospital.PHP" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
+          <!-- <a href="loginhospital.PHP" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a> -->
         </div>
       </div>
     </div>
@@ -273,10 +291,7 @@ include '../shared/nav.php';
     <td>$row[HOSPITAL_CONTACTNUMBER]</td>
    
     <td>
-        <a class='btn btn-primary btn-sm' href='edit.php?id=$row[HOSPITALID]'>Edit</a>
-        <a class='btn btn-danger btn-sm' href='delete.php?id=$row[HOSPITALID]'>Delete</a>
-        <a  href='fullpage.php?id=$row[HOSPITALID]'><i class='fa-regular fa-eye' style='color: #108e5e;'></i></a>
-
+        <a class='btn btn-primary btn-sm text-dark' href='book_appointment.php?hosp_id=$row[HOSPITALID]&vacc_id=$vacc_id&child_id=$child_id'>Book</a>
         
 
     </td>

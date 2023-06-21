@@ -1,8 +1,11 @@
 <?php
  session_start();
-include '../shared/nav.php';
 
-       
+if (!isset($_SESSION["PARENTID"])) {
+  header("Location: ../parent/login-1.php");
+  exit();
+}
+include '../shared/nav.php';
 
         ?>
 
@@ -239,19 +242,13 @@ include '../shared/nav.php';
           <h2>Manage <b>Employees</b></h2>
         </div>
         <div class="col-sm-6">
-          <a href="add-new.php" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
+          <a href="add-new.php" class="btn btn-success" ><i class="material-icons">&#xE147;</i> <span>Add New Child</span></a>
         </div>
       </div>
     </div>
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-          </th>
           
           <th>ID</th>
           <th>Name</th>
@@ -280,8 +277,9 @@ include '../shared/nav.php';
  
    
     <td>
-        <a class='btn btn-primary btn-sm' href='edit.php?id=$row[CHILDRENID]'>Edit</a>
-        <a class='btn btn-danger btn-sm' href='delete.php?id=$row[CHILDRENID]'>Delete</a>
+        <a class='btn btn-primary btn-sm text-dark' href='edit.php?id=$row[CHILDRENID]'>Edit</a>
+        <a class='btn btn-danger btn-sm text-dark' href='delete.php?id=$row[CHILDRENID]'>Delete</a>
+        <a class='btn btn-secondary btn-sm text-dark' href='request_vaccine.php?id=$row[CHILDRENID]'>Request Hosipital for Vaccine</a>
     </td>
 </tr>";
                 }

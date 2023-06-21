@@ -1,7 +1,8 @@
 <?php
-include '../shared/nav.php';
-
 session_start();
+// include '../shared/nav.php';
+
+
 
 include 'config.php';
 

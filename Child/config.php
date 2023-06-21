@@ -2,7 +2,7 @@
  $server = 'localhost';
  $username = 'root';
  $password = '';
- $database = ' db_vaccinecompany';
+ $database = 'db_vaccinecompany';
 
 
 

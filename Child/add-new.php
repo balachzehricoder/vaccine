@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-
 if (!isset($_SESSION["PARENTID"])) {
-    header("Location: index.php");
+    header("Location: ../parent/login-1.php");
     exit();
   }
+  include '../shared/nav.php';
 include 'config.php';
 // $servername = "localhost";
 // $username = "root";
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     <div class="container my-5">
-        <h2>New Employee</h2>
+        <h2>New Child</h2>
         <form action="" method="post">
             <div class="row md-3">
                 <label class="col-sm-3 col-form-label">Name</label>

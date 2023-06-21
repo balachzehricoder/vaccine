@@ -236,19 +236,13 @@ include '../shared/nav.php';
           <h2>Manage <b>Employees</b></h2>
         </div>
         <div class="col-sm-6">
-          <a href="login-1.PHP" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
+          <a href="login-1.PHP" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Vaccine</span></a>
         </div>
       </div>
     </div>
     <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th>
-            <span class="custom-checkbox">
-								<input type="checkbox" id="selectAll">
-								<label for="selectAll"></label>
-							</span>
-          </th>
           
           <th>id</th>
           <th>name</th>
