@@ -1,7 +1,8 @@
 <?php
-include '../shared/nav.php';
 
 session_start();
+
+
 
 include 'config.php';
 
@@ -55,7 +56,7 @@ if (isset($_POST["signin"])) {
     if (password_verify($PARENT_PASSWORD, $stored_password)) {
         $_SESSION["PARENTID"] = $row['PARENTID'];
         $_SESSION["PARENT_NAME"] = $row['PARENT_NAME'];
-        header("Location: index.php");
+        header("Location: ../child/index.php");
         exit();
     } else {
       echo "<script>alert('Login details are incorrect. Please try again.');</script>";

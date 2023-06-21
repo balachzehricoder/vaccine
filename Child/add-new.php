@@ -1,92 +1,141 @@
 <?php
+session_start();
 
-include "config.php";
-include '../shared/nav.php';
-if (isset($_POST["submit"])) {
-   $name = $_POST['name'];
-   $parent = $_SESSION["PARENTID"];
-   $dob = $_POST['dob'];
-   $gender = $_POST['gender'];
 
-   $sql = "INSERT INTO `crud`( `name`, `parent`, `dob`, `gender`) VALUES ('$name','$parent','$dob','$gender')";
+if (!isset($_SESSION["PARENTID"])) {
+    header("Location: index.php");
+    exit();
+  }
+include 'config.php';
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $database = "crud";
+// //Create Connection
+// $connection = new mysqli($servername, $username, $password, $database);
 
-   $result = mysqli_query($conn, $sql);
 
-   if ($result) {
-      header("Location: index.php?msg=New record created successfully");
-   } else {
-      echo "Failed: " . mysqli_error($conn);
-   }
+$CHILDREN_NAME = "";
+$DATEOFBIRTH = "";
+$PARENTID = "";
+
+$erroMessage = "";
+$succesMessage = "";
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $CHILDREN_NAME = $_POST["CHILDREN_NAME"];
+    $DATEOFBIRTH = $_POST["DATEOFBIRTH"];
+    $PARENTID = $_SESSION["PARENTID"];
+    
+
+  
+
+        //add new employee to database
+
+        $sql = "INSERT INTO children (CHILDREN_NAME, CHILDREN_DATEOFBIRTH, PARENTID) VALUES ('$CHILDREN_NAME','$DATEOFBIRTH', '$PARENTID')";
+        $result = $conn->query($sql);
+        if (!$result) {
+            $erroMessage = "invalid query:" . $conn->error;
+      
+        }
+
+        $CHILDREN_NAME = "";
+        $DATEOFBIRTH = "";
+
+        $succesMessage = "children created successfully";
+
+        header('Location: index.php');
+
+    
+
+
 }
 
+
+
+
+
 ?>
-
-
 
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-   
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-   <title>Child vaccination</title>
 </head>
 
 <body>
-   <nav class="navbar navbar-light justify-content-center fs-3 mb-5" style="background-color: #00ff5573;">
-    List of Child
-   </nav>
+    <?php
+    if (!empty($erroMessage)) {
+        echo "<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+    <strong>$erroMessage</strong>
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+ 
+    </button>
+  </div>";
+    }
 
-   <div class="container">
-      <div class="text-center mb-4">
-         <h3>Add New Child</h3>
-         <p class="text-muted">Complete the form below to add a Child</p>
-      </div>
 
-      <div class="container d-flex justify-content-center">
-         <form action="" method="post" style="width:50vw; min-width:300px;">
-            <div class="row mb-3">
-               <div class="col">
-                  <label class="form-label">Name:</label>
-                  <input type="text" class="form-control" name="name" placeholder="Child name">
-               </div>
+    ?>
 
+
+    <div class="container my-5">
+        <h2>New Employee</h2>
+        <form action="" method="post">
+            <div class="row md-3">
+                <label class="col-sm-3 col-form-label">Name</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="CHILDREN_NAME" value="<?php echo $CHILDREN_NAME; ?>">
+                </div>
+            </div>
+            <div class="row md-3">
+                <label class="col-sm-3 col-form-label">DATEOFBIRTH</label>
+                <div class="col-sm-6">
+                    <input type="date" class="form-control" name="DATEOFBIRTH" value="<?php echo $DATEOFBIRTH; ?>">
+                </div>
+            </div>
+            
             </div>
 
-            <div class="mb-3">
-               <label class="form-label">Date of birth:</label>
-               <input type="date" class="form-control" name="dob" placeholder="11121221">
+            <?php
+            if (!empty($succesMessage)) {
+                echo "
+    <div class='row md-3'>
+                <div class='offset-sm-3 col-sm-6'>
+    <div class='alert alert-success alert-dismissible fade show' role='alert'>
+    <strong>$succesMessage</strong> 
+    <button type='button' class='close' data-dismiss='alert' aria-label='Close'></button>
+</div>
+</div>
+    </button>
+  </div>";
+            }
+
+
+            ?>
+
+            <div class="row md-3">
+                <div class="offset-sm-3 col-sm-3 d-grid">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="col-sm-3 d-grid">
+                    <a href="index.php" class="btn btn-outline-primary" role="button">Cancel</a>
+                </div>
             </div>
 
-            <div class="form-group mb-3">
-               <label>Gender:</label>
-               &nbsp;
-               <input type="radio" class="form-check-input" name="gender" id="male" value="male">
-               <label for="male" class="form-input-label">Male</label>
-               &nbsp;
-               <input type="radio" class="form-check-input" name="gender" id="female" value="female">
-               <label for="female" class="form-input-label">Female</label>
-            </div>
+        </form>
+    </div>
 
-            <div>
-               <button type="submit" class="btn btn-success" name="submit">Save</button>
-               <a href="index.php" class="btn btn-danger">Cancel</a>
-            </div>
-         </form>
-      </div>
-   </div>
-
-   <!-- Bootstrap -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
