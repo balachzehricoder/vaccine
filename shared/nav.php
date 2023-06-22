@@ -61,7 +61,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="../vaccine/index.php">All Vaccines</a>
-                <a class="dropdown-item" href="../vaccine/">Add Vaccine</a>
+                <a class="dropdown-item" href="../vaccine/create.php">Add Vaccine</a>
               </div>
             </li>
 

@@ -1,11 +1,8 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["PARENTID"])) {
-    header("Location: ../parent/login-1.php");
-    exit();
-  }
-  
+
+
 include 'config.php';
 // $servername = "localhost";
 // $username = "root";
@@ -15,39 +12,50 @@ include 'config.php';
 // $connection = new mysqli($servername, $username, $password, $database);
 
 
-$CHILDREN_NAME = "";
-$DATEOFBIRTH = "";
-$PARENTID = "";
+$VACCINE_NAME = "";
+$VACCINE_ISSUEDATE = "";
+$VACCINE_EXPIREDATE = "";
+$VACCINE_STATUS = "";
+$VACCINE_DESC = "";
+
 
 $erroMessage = "";
 $succesMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $CHILDREN_NAME = $_POST["CHILDREN_NAME"];
-    $DATEOFBIRTH = $_POST["DATEOFBIRTH"];
-    $PARENTID = $_SESSION["PARENTID"];
+    $VACCINE_NAME = $_POST["VACCINE_NAME"];
+    $VACCINE_ISSUEDATE = $_POST["VACCINE_ISSUEDATE"];
+    $VACCINE_EXPIREDATE =$_POST["VACCINE_EXPIREDATE"];
+    $VACCINE_STATUS	 = $_POST["VACCINE_STATUS"];
+    $VACCINE_DESC	 = $_POST["VACCINE_DESC"];
+
+
     
 
   
 
         //add new employee to database
 
-        $sql = "INSERT INTO children (CHILDREN_NAME, CHILDREN_DATEOFBIRTH, PARENTID) VALUES ('$CHILDREN_NAME','$DATEOFBIRTH', '$PARENTID')";
+        $sql = "INSERT INTO vaccine (VACCINE_NAME , VACCINE_ISSUEDATE , VACCINE_EXPIREDATE , VACCINE_STATUS , VACCINE_DESC ) VALUES ('$VACCINE_NAME','$VACCINE_ISSUEDATE', '$VACCINE_EXPIREDATE','$VACCINE_STATUS','$VACCINE_DESC')";
         $result = $conn->query($sql);
         if (!$result) {
             $erroMessage = "invalid query:" . $conn->error;
       
         }
 
-        $CHILDREN_NAME = "";
-        $DATEOFBIRTH = "";
+        $VACCINE_NAME = "";
+        $VACCINE_ISSUEDATE = "";
+        $VACCINE_EXPIREDATE = "";
+        $VACCINE_STATUS = "";
+        $VACCINE_DESC = "";
 
-        $succesMessage = "children created successfully";
+
+        $succesMessage = "vaccine created successfully";
 
         header('Location: index.php');
-exit;
+
     
-include '../shared/nav.php';
+
 
 }
 
@@ -87,18 +95,33 @@ include '../shared/nav.php';
 
 
     <div class="container my-5">
-        <h2>New Child</h2>
+        <h2>New vaccine</h2>
         <form action="" method="post">
             <div class="row md-3">
-                <label class="col-sm-3 col-form-label">Name</label>
+                <label class="col-sm-3 col-form-label">VACCINE_NAME</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="CHILDREN_NAME" value="<?php echo $CHILDREN_NAME; ?>">
+                    <input type="text" class="form-control" name="VACCINE_NAME" value="<?php echo $VACCINE_NAME; ?>">
                 </div>
             </div>
             <div class="row md-3">
-                <label class="col-sm-3 col-form-label">DATEOFBIRTH</label>
+                <label class="col-sm-3 col-form-label">VACCINE_ISSUEDATE</label>
                 <div class="col-sm-6">
-                    <input type="date" class="form-control" name="DATEOFBIRTH" value="<?php echo $DATEOFBIRTH; ?>">
+                    <input type="date" class="form-control" name="VACCINE_ISSUEDATE" value="<?php echo $VACCINE_ISSUEDATE; ?>">
+                </div>
+
+                <div class="col-sm-6">
+                <label class="col-sm-3 col-form-label">VACCINE_EXPIREDATE</label>
+                    <input type="date" class="form-control" name="VACCINE_EXPIREDATE" value="<?php echo $VACCINE_EXPIREDATE; ?>">
+                </div>
+
+                <div class="col-sm-6">
+                <label class="col-sm-3 col-form-label">VACCINE_STATUS</label>
+                    <input type="text" class="form-control" name="VACCINE_STATUS" value="<?php echo $VACCINE_STATUS; ?>">
+                </div>
+
+                <div class="col-sm-6">
+                <label class="col-sm-3 col-form-label">VACCINE_DESC</label>
+                    <input  type="text" class="form-control" name="VACCINE_DESC" value="<?php echo $VACCINE_DESC; ?>">
                 </div>
             </div>
             

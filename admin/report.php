@@ -264,7 +264,6 @@ include '../shared/nav.php';
         <tr>
         <?php
         include 'config.php';
-        $parentid = $_SESSION["PARENTID"] ;
                 // read all row from database table
                 $sql = "select * from report";
                 $result = $conn->query($sql);

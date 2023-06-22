@@ -253,10 +253,11 @@ include '../shared/nav.php';
 							</span>
           </th>
           
-          <th>ID</th>
-          <th>Name</th>
-          <th>DATEOFBIRTH</th>
-          <th>PARENTID</th>
+          
+          <th>REQUESTID</th>
+          <th>CHILDRENID</th>
+          <th>VACCINEID</th>
+          <th>STATUS</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -266,17 +267,17 @@ include '../shared/nav.php';
         include 'config.php';
         $parentid = $_SESSION["PARENTID"] ;
                 // read all row from database table
-                $sql = "select * from request";
+                $sql = "SELECT CHILDRENID , CHILDREN_NAME, CHILDREN_DATEOFBIRTH , c.PARENTID, PARENT_NAME FROM children c inner join parent p ON c.PARENTID = p.PARENTID where c.parentid = '$parentid';";
                 $result = $conn->query($sql);
                 if (!$result) {
                     die("invalid query:" . $conn->error);
                 }
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>
+    <td>$row[REQUESTID]</td>
     <td>$row[CHILDRENID]</td>
-    <td>$row[CHILDREN_NAME]</td>
-    <td>$row[CHILDREN_DATEOFBIRTH]</td>
-    <td>$row[PARENTID]</td>
+    <td>$row[VACCINEID]</td>
+    <td>$row[STATUS]</td>
  
    
     <td>
