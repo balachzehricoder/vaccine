@@ -19,10 +19,9 @@ if (isset($_POST["signin"])) {
 
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
-        $stored_password = $row['ADMIN_PASSWORD'];
 
         // Verify the password
-        if (password_verify($ADMIN_PASSWORD, $stored_password)) {
+        if ($row['ADMIN_PASSWORD'] == $ADMIN_PASSWORD ) {
             session_start();
             $_SESSION["ADMINid"] = $row['ADMINid'];
             $_SESSION["ADMIN_NAME"] = $row['ADMIN_NAME'];
@@ -161,7 +160,7 @@ body {
         <div class="text-center mt-4 name">
             ADMIN
         </div>
-        <form class="p-3 mt-3">
+        <form class="p-3 mt-3" method="post">
             <div class="form-field d-flex align-items-center">
                 <span class="far fa-user"></span>
                 <input type="text" name="ADMIN_EMAILID" id="userName" placeholder="Username">

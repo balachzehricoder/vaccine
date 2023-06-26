@@ -12,6 +12,7 @@ $vacc_id =  $_GET["vacc_id"];
 $child_id = $_GET["child_id"];
 $hosp_id = $_GET["hosp_id"];
 
+
        
 include 'config.php';
 // $servername = "localhost";

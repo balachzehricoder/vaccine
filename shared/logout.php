@@ -6,7 +6,7 @@ session_destroy();
 
 
 
-header("Location: ../admin/adminlogin.php");
+header("Location:../shared/nav.php");
 
 echo "<script> alert 'you have been logged out'</script> "; 
 
